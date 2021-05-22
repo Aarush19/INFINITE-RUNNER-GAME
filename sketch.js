@@ -3,7 +3,7 @@ var END = 0;
 var gameState = PLAY;
 
 var trex, trex_running, trex_collided;
-var ground, invisibleGround, groundImage;
+var  invisibleGround,groundImage;
 
 var cloudsGroup, cloudImage;
 var sky,skyImage
@@ -21,8 +21,7 @@ function preload(){
 
   skyImage = loadImage ("SKY.jpg");
 
-  groundImage = loadImage("ground.jpg");
-
+  groundImage = loadImage ("ground3.jpg");
 
   cloudImage = loadImage("cloud.png");
 
@@ -38,7 +37,10 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(600, 200);
+  createCanvas(displayWidth , displayHeight);
+
+  //sky=createSprite(600,600,400,400)
+  //sky.addImage("sky",skyImage)
   
   trex = createSprite(50,180,20,50);
   
@@ -47,12 +49,10 @@ function setup() {
   trex.scale = 0.5;
 
   ground = createSprite(200,180,400,20);
-  ground.addImage("ground",groundImage);
+  ground.addImage("ground3",groundImage);
   ground.x = ground.width /2;
   
-  sky = createSprite(300,150,400,400);
-  sky.addImage("sky",skyImage);
-  sky.x = ground.width /2;
+  
 
   gameOver = createSprite(300,100);
   gameOver.addImage(gameOverImg);
@@ -77,7 +77,7 @@ function setup() {
 
 function draw() {
   //trex.debug = true;
-  background(155);
+  background(skyImage);
   text("Score: "+ score, 500,50);
   
   if (gameState===PLAY){
@@ -92,11 +92,16 @@ function draw() {
   
     if (ground.x < 0){
       ground.x = ground.width/2;
+
+      
     }
   
     trex.collide(invisibleGround);
     spawnClouds();
     spawnObstacles();
+
+    camera.position.x = displayWidth/2
+      camera.position.y = trex.y
   
     if(obstaclesGroup.isTouching(trex)){
         gameState = END;
@@ -199,4 +204,4 @@ function reset(){
   
   score = 0;
   
-}
+} 
